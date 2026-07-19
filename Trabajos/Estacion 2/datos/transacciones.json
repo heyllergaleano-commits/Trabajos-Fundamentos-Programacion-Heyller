@@ -1,0 +1,32 @@
+[
+    {
+        "cliente_id": "C001",
+        "tipo": "DEBITO",
+        "monto": 150000.0,
+        "impacto": 1500
+    },
+    {
+        "cliente_id": "C002",
+        "tipo": "CREDITO",
+        "monto": 500000.0,
+        "impacto": 10000.0
+    },
+    {
+        "cliente_id": "C005",
+        "tipo": "DEBITO",
+        "monto": 45000.0,
+        "impacto": 1500
+    },
+    {
+        "cliente_id": "C007",
+        "tipo": "CREDITO",
+        "monto": 10000.0,
+        "impacto": 200.0
+    },
+    {
+        "cliente_id": "C009",
+        "tipo": "DEBITO",
+        "monto": 600000.0,
+        "impacto": 1500
+    }
+]
