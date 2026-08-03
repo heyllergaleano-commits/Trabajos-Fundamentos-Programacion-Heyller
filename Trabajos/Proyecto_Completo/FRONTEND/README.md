@@ -1,103 +1,198 @@
-# FRONTEND — React + Vite + Tailwind CSS
+# 💳 Quantum Core Finance
 
-Esta es una aplicación **independiente**. No sabe que existe Python, Flask ni Prisma: solo sabe
-hacer peticiones HTTP a `http://localhost:5000` y dibujar lo que reciba. Se enciende sola, con
-sus propios comandos, en un puerto distinto al del backend.
+## Sistema de Gestión Financiera Full Stack
 
----
-
-## ¿Por qué Node.js?
-
-React, Vite y Tailwind son herramientas que corren sobre **Node.js** (un motor para ejecutar
-JavaScript fuera del navegador). `npm` (Node Package Manager) es el instalador de paquetes que
-viene incluido con Node — es el "pip" del mundo JavaScript.
-
-### Instalar Node.js
-
-1. Entra a <https://nodejs.org/> y descarga la versión **LTS** (la recomendada, más estable).
-2. Instala con las opciones por defecto (siguiente, siguiente, siguiente).
-3. Verifica que quedó instalado abriendo una terminal nueva:
-
-   ```powershell
-   node -v
-   npm -v
-   ```
-
-   Deberías ver un número de versión en cada comando (por ejemplo `v22.x.x` y `10.x.x`).
+Quantum Core Finance es una aplicación Full Stack desarrollada como proyecto final de la asignatura **Fundamentos de Programación**. El sistema permite administrar transacciones financieras mediante operaciones **CRUD (Crear, Leer, Actualizar y Eliminar)** utilizando una arquitectura moderna basada en React, Flask, Prisma, MySQL y Docker.
 
 ---
 
-## Estructura de carpetas (lo más simple posible)
+# 📌 Objetivo del proyecto
+
+Desarrollar un sistema de gestión financiera que integre un frontend, un backend y una base de datos, aplicando los conceptos aprendidos durante el curso:
+
+- Programación Orientada a Objetos (POO)
+- Arquitectura por capas
+- Bases de datos relacionales
+- API REST
+- Persistencia de datos
+- Docker
+- Git y GitHub
+
+---
+
+# 🛠 Tecnologías utilizadas
+
+## Frontend
+
+- React
+- Vite
+- Tailwind CSS
+- JavaScript
+
+## Backend
+
+- Python
+- Flask
+- Prisma ORM
+
+## Base de datos
+
+- MySQL 8
+- Docker Desktop
+
+## Control de versiones
+
+- Git
+- GitHub
+
+---
+
+# 🏗 Arquitectura del sistema
 
 ```
-FRONTEND/
-├── index.html            # La única página HTML; React "monta" la app adentro
-├── package.json           # Lista de dependencias y comandos (equivalente a requirements.txt)
-├── vite.config.js          # Configuración de Vite (incluye el plugin de Tailwind)
-└── src/
-    ├── main.jsx            # Punto de entrada: monta <App /> dentro del HTML
-    ├── App.jsx             # Componente raíz: por ahora solo muestra la página de Transacciones
-    ├── index.css           # Un solo import: @import "tailwindcss";
-    ├── api/
-    │   └── transacciones.js   # Todas las llamadas fetch() al backend, en un solo lugar
-    └── pages/
-        └── Transacciones.jsx  # La única "página": tabla + formulario del CRUD completo
+             React + Vite
+                   │
+             HTTP / JSON
+                   │
+              Flask API
+                   │
+             Prisma ORM
+                   │
+           MySQL (Docker)
 ```
 
-**El paralelismo con el backend** (para que se les quede grabado en clase):
+El sistema está dividido en tres componentes independientes:
 
-| Backend (Flask) | Frontend (React) | Rol |
-|---|---|---|
-| `routes/` | `api/` | El punto de contacto con "el otro lado" (URLs / fetch) |
-| `controllers/` | `pages/` | Qué hacer con los datos y qué mostrar |
-| `models/` (habla con Prisma) | — | No aplica: el frontend nunca toca la base de datos directamente |
+- **Frontend:** interfaz desarrollada con React.
+- **Backend:** API REST construida con Flask.
+- **Base de datos:** MySQL ejecutándose dentro de un contenedor Docker.
 
-Como el CRUD es de **una sola tabla** (`Transaccion`), hay una sola página. Si más adelante se
-agregan más tablas, cada una tendría su propio archivo en `pages/` y su propio archivo en `api/`.
+Esta arquitectura facilita el mantenimiento, la escalabilidad y la separación de responsabilidades.
 
 ---
 
-## Instalación y ejecución
+# ⚙ Funcionalidades
 
-Parado **dentro de la carpeta `FRONTEND`**:
+El sistema permite:
 
-```powershell
-cd "MisProyectosPython\Proyecto_Completo\FRONTEND"
+- ✅ Crear transacciones
+- ✅ Consultar transacciones
+- ✅ Editar transacciones
+- ✅ Eliminar transacciones
+- ✅ Validación de datos
+- ✅ Persistencia de información en MySQL
+- ✅ Comunicación mediante API REST
+
+---
+
+# 📂 Estructura del proyecto
+
+```
+Proyecto_Completo
+│
+├── BACKEND
+│   ├── app.py
+│   ├── controllers
+│   ├── models
+│   ├── routes
+│   └── schema.prisma
+│
+├── FRONTEND
+│   ├── src
+│   ├── public
+│   ├── package.json
+│   └── vite.config.js
+│
+└── README.md
+```
+
+---
+
+# ▶ Cómo ejecutar el proyecto
+
+## 1. Iniciar MySQL en Docker
+
+```bash
+docker start empresa
+```
+
+---
+
+## 2. Ejecutar el Backend
+
+```bash
+cd Proyecto_Completo/BACKEND
+
+pip install -r requirements.txt
+
+prisma db push
+
+python app.py
+```
+
+El servidor quedará disponible en:
+
+```
+http://localhost:5000
+```
+
+---
+
+## 3. Ejecutar el Frontend
+
+```bash
+cd Proyecto_Completo/FRONTEND
+
 npm install
+
 npm run dev
 ```
 
-`npm install` lee `package.json` y descarga las dependencias (React, Vite, Tailwind) a la carpeta
-`node_modules/` (no se sube a git — por eso pesa "cero" en el repositorio). `npm run dev` levanta
-el servidor de desarrollo, normalmente en <http://localhost:5173>.
+La aplicación quedará disponible en:
 
-> ⚠️ Para que la pantalla realmente muestre datos, el **backend** debe estar corriendo en el
-> puerto 5000 (ver [`../BACKEND/README.md`](../BACKEND/README.md)) y el contenedor Docker
-> `empresa` encendido. El frontend no arranca la base de datos ni el backend por su cuenta.
-
----
-
-## Resumen rápido (copiar y pegar)
-
-```powershell
-cd "MisProyectosPython\Proyecto_Completo\FRONTEND"
-npm install
-npm run dev
+```
+http://localhost:5173
 ```
 
-Abre <http://localhost:5173> en el navegador.
+---
+
+# 📸 Evidencias
+
+Durante la ejecución del proyecto se verificó:
+
+- Contenedor Docker funcionando.
+- Base de datos MySQL activa.
+- API REST operativa.
+- Frontend React funcionando.
+- Operaciones CRUD completadas correctamente.
+- Persistencia de datos en MySQL.
 
 ---
 
-## ¿Qué hace `pages/Transacciones.jsx`?
+# 🎓 Autor
 
-1. Al cargar la página, pide la lista de transacciones al backend (`obtenerTransacciones()`) y
-   las pinta en una tabla.
-2. El formulario de arriba crea una transacción nueva (`crearTransaccion`) o, si se presionó
-   "Editar" en una fila, actualiza esa transacción (`actualizarTransaccion`).
-3. El botón "Eliminar" de cada fila llama a `eliminarTransaccion(id)`.
-4. Si el backend responde con un error (por ejemplo, `monto` negativo — la misma validación que
-   vimos en la Semana 3 y en la Semana 4), se muestra en rojo debajo del formulario.
+**Heyller Galeano**
 
-Todo el CRUD vive en un solo archivo a propósito, para que en clase se pueda seguir el flujo de
-datos de principio a fin sin saltar entre muchos componentes.
+Estudiante de Ingeniería de Sistemas
+
+CEIPA Business School
+
+Asignatura: Fundamentos de Programación
+
+---
+
+# 👨‍🏫 Profesor
+
+Simón
+
+---
+
+# 📅 Año
+
+2026
+
+---
+
+# 📄 Licencia
+
+Proyecto desarrollado con fines académicos para la asignatura **Fundamentos de Programación**.
